@@ -1,0 +1,20 @@
+create procedure proc_area()
+ begin
+ declare r numeric(2);
+ declare area numeric(10,2);
+ declare pi numeric(4,2);
+ set pi = 3.14;
+ set r = 5;
+ l1
+ :
+ while r<=9 do
+ set area = pi * power(r,2);
+ insert into areas values(r,area);
+ set r = r + 1;
+ end
+ while l1;
+ end
+ //
+
+delimiter ;
+call proc_area()
