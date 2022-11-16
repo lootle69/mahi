@@ -1,0 +1,23 @@
+create procedure A(IN rollno1 int(10), name1 varchar(20))
+-> begin
+-> declare i_date date;
+-> declare diff int;
+-> declare fine_amt int;
+-> declare EXIT HANDLER FOR SQLEXCEPTION SELECT 'Table not found';
+-> select Date_of_issue into i_date from borrower where Roll_no= rollno1 and Name_of_book = name1;
+-> select DATEDIFF(CURDATE(), i_date) into diff;
+-> if(diff>=15 and diff<=30) then
+-> set fine_amt= diff*5; 
+
+
+-> insert into fine values(rollno1, CURDATE(), fine_amt);
+-> elseif(diff>30) then
+-> set fine_amt= diff*50;
+-> insert into fine values(rollno1, CURDATE(), fine_amt);
+-> end if;
+-> update borrower set Status= 'R' where Roll_no= rollno1 and Name_of_book = name1;
+-> end
+-> //
+
+delimiter ;
+mysql> call A(1, 'MySQL');
