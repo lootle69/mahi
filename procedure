@@ -1,0 +1,49 @@
+create procedure proc_grade1()
+begin
+declare i int;
+declare n int;
+declare rollno1 int;
+declare name1 varchar(20);
+declare class1 varchar(40);
+declare total1 int;
+declare s1 int;
+declare s2 int;
+declare s3 int;
+declare s4 int;
+declare s5 int;
+select count(*)into n from marks;
+set i=0;
+disp:loop
+set i=i+1;
+select rollno into rollno1 from marks where rollno=i;
+select name into name1 from marks where rollno=i;
+select sub1 into s1 from marks where rollno=i;
+select sub2 into s2 from marks where rollno=i;
+select sub3 into s3 from marks where rollno=i;
+select sub4 into s4 from marks where rollno=i;
+select sub5 into s5 from marks where rollno=i;
+set total1=s1+s2+s3+s4+s5;
+if total1<=1500 and total1>990 then
+set class1='distinction';
+else
+if total1<=989 and total1>900 then
+set class1='first class';
+else
+if total1<899 and total1>825 then
+set class1='higher class';
+else
+set class1='pass class';
+end if;
+end if;
+end if;
+insert into stud_marks values(rollno1,name1,total1);
+insert into results values(rollno1,name1,class1);
+if i=n then
+leave disp;
+end if;
+end loop;
+end
+//
+
+
+
